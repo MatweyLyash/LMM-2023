@@ -1,0 +1,4 @@
+﻿  StaticLibrary.cpp
+D:\Desktop\Экзы\LMM-2023\StaticLibrary\StaticLibrary.cpp(48,16): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Desktop\Экзы\LMM-2023\StaticLibrary\StaticLibrary.cpp(53,9): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  StaticLibrary.vcxproj -> D:\Desktop\Экзы\LMM-2023\x64\Debug\StaticLibrary.lib

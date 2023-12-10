@@ -1,0 +1,75 @@
+boolean method EvenCheck( PosInt k)
+{
+var boolean h;
+k= k % 2;
+ if (k ~ 0)
+ {
+   h =TRUE;
+ }
+ else
+{
+   h =FALSE;
+ }
+back h;
+}
+
+PosInt method GetFact( PosInt n)
+{
+  var PosInt k;
+  var PosInt j;
+ if (n < 0)
+ {
+   k = 0;
+ }
+ 
+ if (n ~ 0)
+ {
+   k = 1;
+ } 
+ else
+ {
+   j=n-1;
+   k=n*GetFact(j);
+ }
+back k;
+}
+procedure Count( string h)
+{
+ ? write "счет от нуля до длины строки: ";
+  write h;
+  hortab;
+  var PosInt length = strlength (h);
+  var PosInt i=0;
+  cycle (i < length)
+  {
+   write i;
+   write ',';
+   i=i+1; 
+  }
+}
+
+glavnaya
+{
+ var PosInt number = GetFact(7);  ? вычисляем факториал 
+ write "факториал числа равен: ";
+
+ write number;
+ hortab ;
+  write 'h';
+  hortab;
+ var boolean iseven = EvenCheck(number); ? Проверка на четность числа  
+ write iseven;
+ hortab ;
+ Count("hell");
+ hortab ;
+ var PosInt binary = ^10001010;
+ write binary;
+ hortab ;
+ var PosInt octal = 015; 
+ var PosInt result = strlength ("hello")+((^1010+i012+45)/(2+(4*5+1)/3))+ stoi ("12")+(octal+binary)%2;
+ write result;  
+ hortab ;
+ var PosInt g = strcomp("hello","hell");
+ write g;
+ hortab ;
+}
