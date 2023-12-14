@@ -29,6 +29,10 @@ namespace Gen
 		out << "EXTRN OutputStr: proc\n";
 		out << "EXTRN OutputChar: proc\n";
 		out << "EXTRN OutputBool: proc\n";
+		out << "EXTRN OutputLNInt: proc\n";
+		out << "EXTRN OutputLNStr: proc\n";
+		out << "EXTRN OutputLNChar: proc\n";
+		out << "EXTRN OutputLNBool: proc\n";
 		out << "EXTRN strlength: proc\n";
 		out << "EXTRN stoi: proc\n";
 		out << "EXTRN strcomp: proc\n";
@@ -46,7 +50,7 @@ namespace Gen
 				if (idT.table[i].idDataType == IT::STR)
 					out << " byte \"" << idT.table[i].value.vstr.str << "\",0";
 				else if (idT.table[i].idDataType == IT::INT || idT.table[i].idDataType == IT::BOOL)
-					out << " sdword " << idT.table[i].value.vint;
+					out << " dword " << idT.table[i].value.vint;
 				else if (idT.table[i].idDataType == IT::CHAR)
 					out << " word \'" << idT.table[i].value.vchar << "\'";
 				out << "\n";
@@ -278,7 +282,21 @@ namespace Gen
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tcdq\n\tidiv ebx\n\tpush edx\n";
 								break;
+								//hz verno li
+							case LT::ANDOPER:
+								out << "\tpop ebx\n\tpop eax\n";
+								out << "\tand\t ebx, eax\n\tpush ebx\n";
+								break;
+							case LT::OROPER:
+								out << "\tpop ebx\n\tpop eax\n";
+								out << "\tor\t ebx, eax\n\tpush ebx\n";
+								break;
+							case LT::INVOPER:
+								out << "\tpop ebx\n";
+								out << "\tnot ebx\npush ebx\n";
+								break;
 							}
+
 							break;
 						}
 					case '@': // параметры  // вызов функции 
@@ -505,6 +523,21 @@ namespace Gen
 					else
 						out << "\tpush ";
 					out << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputStr\n";
+				}
+				break;
+			case LEX_WRITELN: // печатать 
+				if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::INT)
+					out << "\tpush " << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputLNInt\n";
+				else if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL)
+					out << "\tpush " << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputLNBool\n";
+				else if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::CHAR)
+					out << "\tpush " << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputLNChar\n";
+				else {
+					if (idT.table[lexT.table[i + 1].idxTI].idType == IT::L)
+						out << "\tpush offset ";
+					else
+						out << "\tpush ";
+					out << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputLNStr\n";
 				}
 				break;
 			case LEX_BREAKL:

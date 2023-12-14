@@ -22,8 +22,8 @@ namespace GRB
 			Rule::Chain(4, TS('p'), TS('i'), NS('F'), NS('U'))
 		),
 		Rule(
-			NS('N'), GRB_ERROR_SERIES + 1, // неверная структура фунцкии 
-			18,
+			NS('N'), GRB_ERROR_SERIES + 1, // неверная конструкция фунцкии 
+			20,
 			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'), NS('N')),
 			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
 			Rule::Chain(5, TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
@@ -31,6 +31,10 @@ namespace GRB
 			Rule::Chain(8, TS('w'), TS('('), NS('C'), TS(')'), TS('{'), NS('L'), TS('}'), NS('N')),
 			Rule::Chain(12, TS('w'), TS('('), NS('C'), TS(')'), TS('{'), NS('L'), TS('}'), TS('!'), TS('{'), NS('L'), TS('}'), NS('N')),
 			Rule::Chain(4, TS('o'), NS('I'), TS(';'), NS('N')),
+			Rule::Chain(3, TS('o'), NS('I'), TS(';')),
+			Rule::Chain(3, TS('q'), NS('I'), TS(';')),
+			Rule::Chain(4, TS('q'), NS('I'), TS(';'), NS('N')),
+
 			Rule::Chain(4, TS('i'), NS('K'), TS(';'), NS('N')),
 			Rule::Chain(3, TS('b'), TS(';'), NS('N')),
 			Rule::Chain(2, TS('b'), TS(';')),
@@ -40,7 +44,7 @@ namespace GRB
 			Rule::Chain(7, TS('u'), TS('('), NS('C'), TS(')'), TS('{'), NS('L'), TS('}')),
 			Rule::Chain(7, TS('w'), TS('('), NS('C'), TS(')'), TS('{'), NS('L'), TS('}')),
 			Rule::Chain(11, TS('w'), TS('('), NS('C'), TS(')'), TS('{'), NS('L'), TS('}'), TS('!'), TS('{'), NS('L'), TS('}')),
-			Rule::Chain(3, TS('o'), NS('I'), TS(';')),
+		
 			Rule::Chain(3, TS('i'), NS('K'), TS(';'))
 		),
 		Rule(

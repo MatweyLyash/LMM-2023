@@ -49,11 +49,6 @@ namespace FST
 					}
 		return rc;
 	}
-
-
-
-
-
 	bool execute(FST fst)
 	{
 		short length = strlen(fst.string);

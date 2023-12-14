@@ -14,11 +14,10 @@
 #define EQU			'~'
 #define NEQU		'!'
 #define EQUAL		'='
-#define EMPTYSTR ""
-#define GREATEOREQUAL ">="
-#define LESSOREQUAL "<="
-#define INVERTING "^"
-#define	AND "&"
+#define EMPTYSTR	 ""
+#define INVERTING	'I'
+#define	AND			'A'
+#define OR			'O'
 using namespace std;
 
 namespace Lexis
@@ -259,6 +258,12 @@ namespace Lexis
 				if (FST::execute(FST::FST(word[i], FST_WRITE)))
 				{
 					LT::Entry* entryLT = new LT::Entry(LEX_WRITE, line, LT_TI_NULLIDX);
+					LT::Add(lexTable, *entryLT);
+					continue;
+				}
+				else if(FST::execute(FST::FST(word[i], FST_WRITELN)))
+				{
+					LT::Entry* entryLT = new LT::Entry(LEX_WRITELN, line, LT_TI_NULLIDX);
 					LT::Add(lexTable, *entryLT);
 					continue;
 				}
@@ -520,9 +525,10 @@ namespace Lexis
 				entryIT = { };
 				continue;
 			}
+
 			else if (FST::execute(FST::FST(word[i], FST_INTLIT)))
 			{
-				long value = 0;
+				int value = 0;
 				int sign = 1;
 				int h = 0;
 				int l = 0;
@@ -532,6 +538,7 @@ namespace Lexis
 					h = strlen(word[i]);
 					l = 1;
 				}
+
 				else
 					h = strlen(word[i]);
 
@@ -569,7 +576,19 @@ namespace Lexis
 					}
 					value *= sign;
 				}
-
+				/*if (word[i][0] == '-')
+				{
+					sign = -1;
+				}
+				if (sign == -1) {
+					if (isbin) {
+						value = std::numeric_limits<unsigned long>::max() - value;
+					}
+					else {
+						value = ULONG_MAX - value;
+					}
+					sign = 1;
+				}*/
 				if (word[i][0] == 'i')
 					sign = -1;
 				if (!isbin)
@@ -584,6 +603,35 @@ namespace Lexis
 					}
 				}
 
+				if (findSameId) continue;
+				entryIT.idType = IT::L;
+				entryIT.idDataType = IT::INT;
+				entryIT.value.vint = value;
+				entryIT.idxFirstLine = indexLex;
+				_itoa_s(literalCounter++, charclit, sizeof(char) * 10, 10);
+				strcpy(bufL, L);
+				word[i] = strcat(bufL, charclit);
+				strcpy(entryIT.id, word[i]);
+				IT::Add(idTable, entryIT);
+				entryIT = {};
+
+				LT::Entry* entryLT = new LT::Entry(LEX_LITERAL, line, IT::IsId(idTable, word[i]));
+				LT::Add(lexTable, *entryLT);
+				continue;
+			}
+			else if (FST::execute(FST::FST(word[i], FST_NOTINTLIT)))
+			{
+				int h = strlen(word[i]);
+				int l = 0;
+				char* buff = new char[h];
+				for (int j = 0; j <= h; j++)
+				{
+					buff[j] = word[i][l];
+					l++;
+				}
+
+				unsigned int value=0;
+					value = UINT_MAX - atoi(buff);
 				if (findSameId) continue;
 				entryIT.idType = IT::L;
 				entryIT.idDataType = IT::INT;
@@ -649,6 +697,19 @@ namespace Lexis
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::NEQUOPER;
 					break;
+				case AND:
+					(*entryLT).priority = 0;
+					entryLT->op = LT::operations::ANDOPER;
+					break;
+				case INVERTING:
+					(*entryLT).priority = 0;
+					entryLT->op = LT::operations::INVOPER;
+					break;
+				case OR:
+					(*entryLT).priority = 0;
+					entryLT->op = LT::operations::OROPER;
+					break;
+
 				}
 				LT::Add(lexTable, *entryLT);
 				continue;

@@ -14,10 +14,22 @@ extern "C"
 		SetConsoleOutputCP(1251);
 		std::cout << a;
 	}
+	void OutputLNChar(char a)
+	{
+		SetConsoleCP(1251);
+		SetConsoleOutputCP(1251);
+		std::cout << a;
+		std::cout << std::endl;
+	}
 
 	void OutputInt(int a)
 	{
 		std::cout << a;
+	}
+	void OutputLNInt(unsigned int a)
+	{
+		std::cout << a;
+		std::cout << std::endl;
 	}
 
 	void OutputStr(char* ptr)
@@ -35,12 +47,36 @@ extern "C"
 			std::cout << ptr[i];
 		}
 	}
+	void OutputLNStr(char* ptr)
+	{
+		SetConsoleCP(1251);
+		SetConsoleOutputCP(1251);
+
+		if (ptr == nullptr)
+		{
+			std::cout << std::endl;
+			return;
+		}
+		for (int i = 0; ptr[i] != '\0'; i++)
+		{
+			std::cout << ptr[i];
+		}
+		std::cout << std::endl;
+	}
 	void OutputBool(int a)
 	{
 		if (a == 1)
-			std::cout << "true";
+			std::cout << "TRUE";
 		else
-			std::cout << "false";
+			std::cout << "FALSE";
+	}
+	void OutputLNBool(int a)
+	{
+		if (a == 1)
+			std::cout << "TRUE";
+		else
+			std::cout << "FALSE";
+		std::cout << std::endl;
 	}
 
 	int strlength(char* str)

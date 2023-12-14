@@ -14,10 +14,11 @@
 #define LEX_DECLARE		'd'	//лексема для var
 #define LEX_RETURN		'r'	//return
 #define LEX_WRITE		'o'	//write
-#define LEX_MAINFUNC	'm'	//лексема для primary
+#define LEX_WRITELN		'q'//writeln
+#define LEX_MAINFUNC	'm'	//лексема для glavnaya
 #define LEX_CYCLE       'u' // лесема для cycle
-#define LEX_IF          'w' // лесема для condition 
-#define LEX_ELSE        '!' // лесема для otherwize
+#define LEX_IF          'w' // лесема для if 
+#define LEX_ELSE        '!' // лесема для else
 #define LEX_PROCEDURE	'p'	// лексема для procedure
 #define LEX_BREAKL      'b' // hortab
 #define LEX_SEMICOLON	';'	//;
@@ -33,6 +34,9 @@
 #define LEX_VOPROS      'v' // ?
 #define LEX_DIRSLASH	'v'	// /
 #define LEX_RAV			'='	//=
+#define LEX_OR			'n'//Or
+#define LEX_AND			'n'//And
+#define LEX_INV			'n'//инвертирование битов
 
 namespace LT	//ТАБЛИЦА ЛЕКСЕМ
 {
@@ -47,6 +51,9 @@ namespace LT	//ТАБЛИЦА ЛЕКСЕМ
 		LESSOPER,
 		EQUOPER,
 		NEQUOPER,
+		OROPER,
+		ANDOPER,
+		INVOPER
 	};
 	struct Entry	//строка таблицы лексем
 	{

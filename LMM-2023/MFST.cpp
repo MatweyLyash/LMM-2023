@@ -185,8 +185,7 @@ namespace MFST
 			MFST_TRACE4("------>NS_NORULE")
 				out << "------------------------------------------------------------------------------------------   ------" << std::endl;
 			out << GetDiagnosis(0, buf) << std::endl;
-			out << GetDiagnosis(1, buf) << std::endl;
-			out << GetDiagnosis(2, buf) << std::endl;
+
 			break;
 		}
 
@@ -215,7 +214,7 @@ namespace MFST
 		short i = 0, k = (pos + n < lentaSize) ? pos + n : lentaSize;
 
 		for (int i = pos; i < k; i++)
-			buf[i - pos] = GRB::Rule::Chain::AlphabetToChar(lenta[i]);
+				buf[i - pos] = GRB::Rule::Chain::AlphabetToChar(lenta[i]);
 
 		buf[i - pos] = '\0';
 		return buf;

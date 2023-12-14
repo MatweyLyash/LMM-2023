@@ -61,7 +61,7 @@ namespace GRB
 			GRABALPHABET pnn, // левый символ правила 
 			Rule& prule // правило 
 		);
-		Rule GetRule(short n); // по номеру - праило 
+		Rule GetRule(short n); // по номеру - правило 
 	};
 	Greibach GetGreibach(); // получить грамматику 
 
