@@ -93,7 +93,7 @@ namespace Lexis
 				{
 					LT::Entry* entryLT = new LT::Entry(LEX_INTEGER, line, LT_TI_NULLIDX);
 					LT::Add(lexTable, *entryLT);
-					entryIT.idDataType = IT::INT;
+					entryIT.idDataType = IT::UINT;
 					findType = true;
 					continue;
 				}
@@ -138,7 +138,7 @@ namespace Lexis
 				{
 					if (IT::IsId(idTable, word[i]) == TI_NULLIDX) {
 						entryIT.idType = IT::F;
-						entryIT.idDataType = IT::INT;
+						entryIT.idDataType = IT::UINT;
 						entryIT.parm->idDataType = IT::STR;
 						entryIT.countOfPar = 1;
 						entryIT.idxFirstLine = indexLex;
@@ -154,7 +154,7 @@ namespace Lexis
 				{
 					if (IT::IsId(idTable, word[i]) == TI_NULLIDX) {
 						entryIT.idType = IT::F;
-						entryIT.idDataType = IT::INT;
+						entryIT.idDataType = IT::UINT;
 						entryIT.parm[0].idDataType = IT::STR;
 						entryIT.parm[1].idDataType = IT::STR;
 						entryIT.countOfPar = 2;
@@ -303,7 +303,7 @@ namespace Lexis
 					strcpy(entryIT.id, word[i]);
 					entryIT.idType = IT::F;
 					entryIT.idxFirstLine = indexLex;
-					entryIT.idDataType = IT::INT;
+					entryIT.idDataType = IT::UINT;
 					IT::Add(idTable, entryIT);
 					entryIT = {};
 
@@ -498,7 +498,7 @@ namespace Lexis
 						entryIT = { };
 						continue;
 					}
-					if (entryIT.idDataType == IT::INT)
+					if (entryIT.idDataType == IT::UINT)
 						entryIT.value.vint = TI_INT_DEFAULT;
 					else if (entryIT.idDataType == IT::STR)
 					{
@@ -595,7 +595,7 @@ namespace Lexis
 					value = sign * strtol(buff, nullptr, 0);
 
 				for (int k = 0; k < idTable.size; k++) {
-					if (idTable.table[k].value.vint == value && idTable.table[k].idType == IT::L && idTable.table[k].idDataType == IT::INT) {
+					if (idTable.table[k].value.vint == value && idTable.table[k].idType == IT::L && idTable.table[k].idDataType == IT::UINT) {
 						LT::Entry* entryLT = new LT::Entry(LEX_LITERAL, line, k);
 						LT::Add(lexTable, *entryLT);
 						findSameId = true;
@@ -605,7 +605,7 @@ namespace Lexis
 
 				if (findSameId) continue;
 				entryIT.idType = IT::L;
-				entryIT.idDataType = IT::INT;
+				entryIT.idDataType = IT::UINT;
 				entryIT.value.vint = value;
 				entryIT.idxFirstLine = indexLex;
 				_itoa_s(literalCounter++, charclit, sizeof(char) * 10, 10);
@@ -631,10 +631,11 @@ namespace Lexis
 				}
 
 				unsigned int value=0;
-					value = UINT_MAX - atoi(buff);
+				value = atoi(buff);
+					
 				if (findSameId) continue;
 				entryIT.idType = IT::L;
-				entryIT.idDataType = IT::INT;
+				entryIT.idDataType = IT::UINT;
 				entryIT.value.vint = value;
 				entryIT.idxFirstLine = indexLex;
 				_itoa_s(literalCounter++, charclit, sizeof(char) * 10, 10);

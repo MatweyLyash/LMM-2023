@@ -22,7 +22,7 @@ extern "C"
 		std::cout << std::endl;
 	}
 
-	void OutputInt(int a)
+	void OutputInt(unsigned int a)
 	{
 		std::cout << a;
 	}

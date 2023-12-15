@@ -21,14 +21,13 @@ EXTRN strcomp: proc
 .stack 4096
 
 .const
-	L1 dword 5
-	L2 dword 2
-	L3 dword 8
+	L1 sdword 5
+	L2 sdword 20
 
 .data
 	buffer BYTE 256 dup(0)
-	glavnayanumber sdword 0
-	glavnayabinary sdword 0
+	glavnayanumber sdword  0
+	glavnayabinary sdword  0
 
 .code
 main proc
@@ -36,14 +35,9 @@ main proc
 	push L1
 	pop glavnayanumber
 	push L2
-	push L3
-	pop ebx
-	pop eax
-	or	 ebx, eax
-	push ebx
 	pop glavnayabinary
 	push glavnayabinary
-	call OutputLNInt
+	call OutputInt
 	call ExitProcess
 main ENDP
 end main

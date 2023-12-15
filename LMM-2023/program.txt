@@ -7,6 +7,6 @@ glavnaya
  hortab;
  var PosInt number = 5;
  var PosInt binary;
- binary = N ^11110000;
- writeln binary;
+ binary = 20;
+ write binary;
 }

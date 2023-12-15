@@ -58,7 +58,7 @@ namespace IT
 
 			switch (idtable.table[i].idDataType)
 			{
-			case INT: out << std::setw(10) << std::left;
+			case UINT: out << std::setw(10) << std::left;
 				if (idtable.table[i].idType == OP) out << "-" << " | ";
 				else out << "integer" << " | "; break;
 			case STR: out << std::setw(10) << std::left;
@@ -92,7 +92,7 @@ namespace IT
 			default: out << std::setw(18) << std::left << "unknown" << " | "; break;
 			}
 			out << std::setw(11) << std::left << idtable.table[i].idxFirstLine << " | ";
-			if (idtable.table[i].idDataType == INT && (idtable.table[i].idType == V || idtable.table[i].idType == L))
+			if (idtable.table[i].idDataType == UINT && (idtable.table[i].idType == V || idtable.table[i].idType == L))
 				out << std::setw(18) << std::left << idtable.table[i].value.vint;
 			else if (idtable.table[i].idDataType == STR && (idtable.table[i].idType == V || idtable.table[i].idType == L))
 				out << "[" << idtable.table[i].value.vstr.length << "]\"" << idtable.table[i].value.vstr.str << "\"";

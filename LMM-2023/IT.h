@@ -10,7 +10,7 @@
 #include "Parm.h"
 namespace IT
 {
-	enum IDDATATYPE { NONE = 0, INT = 1, STR = 2, BOOL = 3, CHAR = 4, PROC = 5 };
+	enum IDDATATYPE { NONE = 0, UINT = 1, STR = 2, BOOL = 3, CHAR = 4, PROC = 5 };
 	enum IDTYPE { V = 1024, F = 2048, P = 2049, L = 2050, OP = 5000 };
 	struct Parms
 	{
@@ -30,7 +30,7 @@ namespace IT
 			char vchar[1];
 			struct
 			{
-				int length;
+				unsigned int length;
 				char str[TI_STR_MAXSIZE - 1];
 			}vstr;// значение стринга
 
