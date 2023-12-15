@@ -468,7 +468,24 @@ namespace Lexis
 					LT::Add(lexTable, *entryLT);
 					continue;
 				}
-			}break;
+			}
+			case 'I':
+			{
+				if (FST::execute(FST::FST(word[i], FST_INVERTING)))
+				{
+					strcpy(entryIT.id, word[i]);
+					entryIT.idxFirstLine = indexLex;
+					entryIT.idType = IT::OP;
+					if (IT::IsId(idTable, word[i]) == TI_NULLIDX)
+						IT::Add(idTable, entryIT);
+					entryIT = { };
+					LT::Entry* entryLT = new LT::Entry(LEX_INV, line, IT::IsId(idTable, word[i]));
+					(*entryLT).priority = 1;
+					entryLT->op = LT::operations::INVOPER;
+					LT::Add(lexTable, *entryLT);
+					continue;
+				}
+			}
 			default: break;
 			}
 
@@ -528,7 +545,7 @@ namespace Lexis
 
 			else if (FST::execute(FST::FST(word[i], FST_INTLIT)))
 			{
-				int value = 0;
+				unsigned int value = 0;
 				int sign = 1;
 				int h = 0;
 				int l = 0;
@@ -576,23 +593,10 @@ namespace Lexis
 					}
 					value *= sign;
 				}
-				/*if (word[i][0] == '-')
-				{
-					sign = -1;
-				}
-				if (sign == -1) {
-					if (isbin) {
-						value = std::numeric_limits<unsigned long>::max() - value;
-					}
-					else {
-						value = ULONG_MAX - value;
-					}
-					sign = 1;
-				}*/
 				if (word[i][0] == 'i')
 					sign = -1;
 				if (!isbin)
-					value = sign * strtol(buff, nullptr, 0);
+					value = stoul(buff);
 
 				for (int k = 0; k < idTable.size; k++) {
 					if (idTable.table[k].value.vint == value && idTable.table[k].idType == IT::L && idTable.table[k].idDataType == IT::UINT) {
@@ -702,10 +706,10 @@ namespace Lexis
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::ANDOPER;
 					break;
-				case INVERTING:
+				/*case INVERTING:
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::INVOPER;
-					break;
+					break;*/
 				case OR:
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::OROPER;
@@ -715,6 +719,7 @@ namespace Lexis
 				LT::Add(lexTable, *entryLT);
 				continue;
 			}
+			
 			else if (FST::execute(FST::FST(word[i], FST_COMMA)))
 			{
 				LT::Entry* entryLT = new LT::Entry(LEX_COMMA, line, LT_TI_NULLIDX);

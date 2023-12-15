@@ -33,9 +33,9 @@
 #define LEX_STAR		'v'	//*
 #define LEX_VOPROS      'v' // ?
 #define LEX_DIRSLASH	'v'	// /
+#define LEX_OR			'v'//Or
+#define LEX_AND			'v'//And
 #define LEX_RAV			'='	//=
-#define LEX_OR			'n'//Or
-#define LEX_AND			'n'//And
 #define LEX_INV			'n'//инвертирование битов
 
 namespace LT	//ТАБЛИЦА ЛЕКСЕМ

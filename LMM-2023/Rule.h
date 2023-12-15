@@ -49,7 +49,7 @@ namespace GRB
 		),
 		Rule(
 			NS('E'), GRB_ERROR_SERIES + 2, // ошибка в выражении
-			8,
+			9,
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(3, TS('('), NS('E'), TS(')')),
@@ -57,7 +57,8 @@ namespace GRB
 			Rule::Chain(2, TS('i'), NS('M')),
 			Rule::Chain(2, TS('l'), NS('M')),
 			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M')),
-			Rule::Chain(3, TS('i'), NS('K'), NS('M'))
+			Rule::Chain(3, TS('i'), NS('K'), NS('M')),
+			Rule::Chain(2, TS('n'), NS('I'))
 		),
 		Rule(
 			NS('F'), GRB_ERROR_SERIES + 3,// ошибка объ€влени€ функции или процедуры

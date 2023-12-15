@@ -42,7 +42,9 @@ namespace Polish
 					queue.push(lex.lextable.table[i]);
 				}
 				continue;
-
+			case LEX_INV: // Унарный оператор
+				stack.push(lex.lextable.table[i]);
+				continue;
 			case LEX_LEFTHESIS:
 				stack.push(lex.lextable.table[i]);
 				continue;
@@ -74,7 +76,8 @@ namespace Polish
 				continue;
 
 			case LEX_OPERATOR:
-				while (!stack.empty() && lex.lextable.table[i].priority <= stack.top().priority) { // пока приоритет меньше или равен последнему
+				while (!stack.empty() && (lex.lextable.table[i].priority
+					<= stack.top().priority <= stack.top().priority || stack.top().lexema == LEX_INV)) { // пока приоритет меньше или равен последнему
 					queue.push(stack.top());
 					stack.pop();
 				}

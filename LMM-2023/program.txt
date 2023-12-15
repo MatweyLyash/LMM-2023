@@ -3,10 +3,9 @@ glavnaya
 ?битовые операции;
 ?изменить тип данных(следует из первого);
 ?изменить структуру генерации кода, чтобы добавить битовые(pochti est');
-? решить проблему с O A N;
+? решить проблему с O A I(никак не решаем ))0), ругается синтаксический анализатор на I );
+
  hortab;
- var PosInt number = 5;
- var PosInt binary;
- binary = 20;
- write binary;
+ var PosInt number = -1;
+ writeln number;
 }

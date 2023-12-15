@@ -291,14 +291,23 @@ namespace Gen
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tor\t ebx, eax\n\tpush ebx\n";
 								break;
-							case LT::INVOPER:
-								out << "\tpop ebx\n";
-								out << "\tnot ebx\npush ebx\n";
-								break;
 							}
 
 							break;
 						}
+					case LEX_INV:
+					{
+						out << "\tpop ebx\n";
+
+						// —оздаем маску, оставл€ющую только младшие биты
+						const unsigned int mask = 0xFFFFFFFF; // 0x7FFFFFFF в двоичной форме: 0111 1111 1111 1111 1111 1111 1111 1111
+
+						// »спользуем маску дл€ инвертировани€ младших битов
+						out << "\tand ebx, " << mask << "\n";
+
+						out << "\tpush ebx\n";
+						break;
+					}
 					case '@': // параметры  // вызов функции 
 						countParms = (char)lexT.table[i + 1].lexema - '0';
 
