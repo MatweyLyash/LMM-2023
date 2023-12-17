@@ -37,13 +37,17 @@ EXTRN strcomp: proc
 	L14 byte "особенности беззнакового целочисленного ципа данных:",0
 	L15 sdword 10
 	L16 sdword 30
-	L17 byte "123asd",0
-	L18 sdword 120
-	L19 byte "факториал: ",0
-	L20 byte "someN не равно 30",0
-	L21 byte "что?",0
-	L22 byte "hell",0
-	L23 byte "hello",0
+	L17 byte " результат выполнени€ процедуры",0
+	L18 byte "123asd",0
+	L19 sdword 120
+	L20 byte "факториал: ",0
+	L21 byte "someN не равно 30",0
+	L22 byte "что?",0
+	L23 byte "world",0
+	L24 byte "words",0
+	L25 sdword 45
+	L26 sdword 2
+	L27 sdword 4
 
 .data
 	buffer BYTE 256 dup(0)
@@ -59,6 +63,7 @@ EXTRN strcomp: proc
 	glavnayasomeN sdword  0
 	glavnayafac sdword  0
 	glavnayacomp sdword  0
+	glavnayaresult sdword  0
 
 .code
 Count proc Counth : dword
@@ -95,7 +100,6 @@ cycle0:
 	cmp eax, Countlength
 	jl cycle0
 cyclenext0:
-	call BREAKL
 	ret
 Count ENDP
 
@@ -213,15 +217,17 @@ main proc
 	push glavnayavyvod
 	call Count
 	push offset L17
+	call OutputLNStr
+	push offset L18
 	pop edx
-	push offset L17
+	push offset L18
 	call stoi
 	push eax
 	pop glavnayafac
 	push glavnayafac
 	call OutputLNInt
 	push glavnayafac
-	push L18
+	push L19
 	pop ebx
 	pop eax
 	sub eax, ebx
@@ -233,7 +239,7 @@ main proc
 	call GetFact
 	push eax
 	pop glavnayafac
-	push offset L19
+	push offset L20
 	call OutputStr
 	push glavnayafac
 	call OutputLNInt
@@ -243,26 +249,68 @@ main proc
 	jz m5
 	je m5
 m4:
-	push offset L20
+	push offset L21
 	call OutputLNStr
 	push L16
 	pop glavnayasomeN
 	jmp e1
 m5:
-	push offset L21
+	push offset L22
 	call OutputStr
 e1:
-	push offset L22
 	push offset L23
+	push offset L24
 	pop edx
 	pop edx
+	push offset L24
 	push offset L23
-	push offset L22
 	call strcomp
 	push eax
 	pop glavnayacomp
 	push glavnayacomp
 	call OutputLNInt
+	push L15
+	push L25
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	push L26
+	push L27
+	push L6
+	pop eax
+	pop ebx
+	mul ebx
+	push eax
+	push L4
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	push L8
+	pop ebx
+	pop eax
+	cdq
+	idiv ebx
+	push eax
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	pop ebx
+	pop eax
+	cdq
+	idiv ebx
+	push eax
+	push L8
+	pop ebx
+	pop eax
+	sub eax, ebx
+	push eax
+	pop glavnayaresult
+	push glavnayaresult
+	call OutputInt
+	call BREAKL
 	call ExitProcess
 main ENDP
 end main

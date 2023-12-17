@@ -36,6 +36,7 @@ int wmain(int argc, wchar_t* argv[])
 		Semantic::SemAnalyze(lex, log);
 		Polish::StartPolish(lex);
 		Lexis::Synchronization(lex);
+		LT::ShowTable(lex.lextable, *out.stream);
 
 		Gen::Generator Gener(lex.lextable, lex.idtable, parm.out);
 
@@ -48,7 +49,7 @@ int wmain(int argc, wchar_t* argv[])
 	catch (Error::ERROR e)
 	{
 		Log::WriteError(log, e);
-	/*	system("otche-nash.mp3");*/
+		system("ost.mp3");
 		return -1;
 	}
 	std::cout << "Все прошло успешно!\n";

@@ -1,17 +1,17 @@
 procedure Count( string h)
 {
+?ебучий калькулятор;
   write "счет от нуля до длины строки: ";
   write h;
   hortab;
-  var PosInt length = strlength (h);
-  var PosInt i=0;
+  var PosInt length = strlength(h);
+  var PosInt i= 0;
   cycle (i < length)
   {
    write i;
    write ',';
    i=i+1; 
   }
-  hortab;
 }
 PosInt method GetFact( PosInt n)
 {
@@ -28,7 +28,7 @@ PosInt method GetFact( PosInt n)
  } 
  else
  {
-   j=n-1;
+   j=n- 1;
    k=n*GetFact(j);
  }
 back k;
@@ -38,7 +38,7 @@ glavnaya
 var PosInt or;
 or = 25 O 5;
 var PosInt and = 7 A 3;
-var PosInt inv = I ^011111111111111111111111111110000 ;
+var PosInt inv = I ^0111111111111111111111111111110000 ;
 var string vyvod = "побитовые операции: или, и, инверсия:";
 writeln vyvod;
 write or;
@@ -58,7 +58,8 @@ someN = someN - 10;
 writeln someN;
 someN = someN + 30;
 writeln someN;
-Count(vyvod); 
+Count(vyvod);
+writeln " результат выполнения процедуры";
 var PosInt fac = stoi("123asd");
 writeln fac;
 fac = fac-120;
@@ -74,6 +75,9 @@ else
 {
 write "что?";
 }
-var PosInt comp = strcomp("hell", "hello");
+var PosInt comp = strcomp("world", "words");
 writeln comp;
+var PosInt result = (10+45)/(2+(4*5+^0001)/3)-3;
+write result;
+hortab;
 }
