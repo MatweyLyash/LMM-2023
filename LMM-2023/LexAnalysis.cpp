@@ -126,14 +126,6 @@ namespace Lexis
 					findType = true;
 					continue;
 				}
-				//else if (FST::execute(FST::FST(word[i], FST_CHAR)))
-				//{
-				//	LT::Entry* entryLT = new LT::Entry(LEX_CHAR, line, LT_TI_NULLIDX);
-				//	LT::Add(lexTable, *entryLT);
-				//	entryIT.idDataType = IT::CHAR;
-				//	findType = true;
-				//	continue;
-				//}
 				else if (FST::execute(FST::FST(word[i], FST_STRLEN)) || FST::execute(FST::FST(word[i], FST_ATOI)))
 				{
 					if (IT::IsId(idTable, word[i]) == TI_NULLIDX) {
@@ -202,7 +194,7 @@ namespace Lexis
 				}
 
 			}break;
-			case 'm': // возможно будет massiv 
+			case 'm': 
 			{
 				if (FST::execute(FST::FST(word[i], FST_FUNCTION)))
 				{
@@ -244,15 +236,6 @@ namespace Lexis
 				}
 
 			}break;
-			/*	case 'b':
-				{
-					if (FST::execute(FST::FST(word[i], FST_RETURN)))
-					{
-						LT::Entry* entryLT = new LT::Entry(LEX_RETURN, line, LT_TI_NULLIDX);
-						LT::Add(lexTable, *entryLT);
-						continue;
-					}
-				}break;*/
 			case 'w':
 			{
 				if (FST::execute(FST::FST(word[i], FST_WRITE)))
@@ -270,23 +253,7 @@ namespace Lexis
 			}break;
 			case 'p':
 			{
-				/*if (FST::execute(FST::FST(word[i], FST_MAIN)))
-				{
-					strcpy(entryIT.id, word[i]);
-					entryIT.idType = IT::F;
-					entryIT.idxFirstLine = indexLex;
-					entryIT.idDataType = IT::INT;
-					IT::Add(idTable, entryIT);
-					entryIT = {};
-
-					LT::Entry* entryLT = new LT::Entry(LEX_MAINFUNC, line, IT::IsId(idTable, word[i]));
-					LT::Add(lexTable, *entryLT);
-					functions.push(word[i]);
-					findMain = true;
-					mainCounter++;
-					continue;
-				}
-				else*/ if (FST::execute(FST::FST(word[i], FST_PROCEDURE)))
+			 if (FST::execute(FST::FST(word[i], FST_PROCEDURE)))
 				{
 					LT::Entry* entryLT = new LT::Entry(LEX_PROCEDURE, line, LT_TI_NULLIDX);
 					LT::Add(lexTable, *entryLT);
@@ -328,13 +295,6 @@ namespace Lexis
 			}
 			case 'c':
 			{
-				/*if (FST::execute(FST::FST(word[i], FST_IF)))
-				{
-					LT::Entry* entryLT = new LT::Entry(LEX_IF, line, LT_TI_NULLIDX);
-					LT::Add(lexTable, *entryLT);
-					is_cycle++;
-					continue;
-				}*/
 				if (FST::execute(FST::FST(word[i], FST_CYCLE)))
 				{
 					LT::Entry* entryLT = new LT::Entry(LEX_CYCLE, line, LT_TI_NULLIDX);
@@ -593,8 +553,7 @@ namespace Lexis
 					}
 					value *= sign;
 				}
-				if (word[i][0] == 'i')
-					sign = -1;
+				
 				if (!isbin)
 					value = stoul(buff);
 
@@ -623,37 +582,6 @@ namespace Lexis
 				LT::Add(lexTable, *entryLT);
 				continue;
 			}
-			else if (FST::execute(FST::FST(word[i], FST_NOTINTLIT)))
-			{
-				int h = strlen(word[i]);
-				int l = 0;
-				char* buff = new char[h];
-				for (int j = 0; j <= h; j++)
-				{
-					buff[j] = word[i][l];
-					l++;
-				}
-
-				unsigned int value=0;
-				value = atoi(buff);
-					
-				if (findSameId) continue;
-				entryIT.idType = IT::L;
-				entryIT.idDataType = IT::UINT;
-				entryIT.value.vint = value;
-				entryIT.idxFirstLine = indexLex;
-				_itoa_s(literalCounter++, charclit, sizeof(char) * 10, 10);
-				strcpy(bufL, L);
-				word[i] = strcat(bufL, charclit);
-				strcpy(entryIT.id, word[i]);
-				IT::Add(idTable, entryIT);
-				entryIT = {};
-
-				LT::Entry* entryLT = new LT::Entry(LEX_LITERAL, line, IT::IsId(idTable, word[i]));
-				LT::Add(lexTable, *entryLT);
-				continue;
-			}
-
 			else if (FST::execute(FST::FST(word[i], FST_OPERATOR)))
 			{
 				strcpy(entryIT.id, word[i]);
@@ -706,10 +634,6 @@ namespace Lexis
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::ANDOPER;
 					break;
-				/*case INVERTING:
-					(*entryLT).priority = 0;
-					entryLT->op = LT::operations::INVOPER;
-					break;*/
 				case OR:
 					(*entryLT).priority = 0;
 					entryLT->op = LT::operations::OROPER;
@@ -718,7 +642,39 @@ namespace Lexis
 				}
 				LT::Add(lexTable, *entryLT);
 				continue;
+				}
+			else if (FST::execute(FST::FST(word[i], FST_NOTINTLIT)))
+			{
+				int h = strlen(word[i]);
+				int l = 0;
+				char* buff = new char[h];
+				for (int j = 0; j <= h; j++)
+				{
+					buff[j] = word[i][l];
+					l++;
+				}
+
+				unsigned int value=0;
+				value = atoi(buff);
+					
+				if (findSameId) continue;
+				entryIT.idType = IT::L;
+				entryIT.idDataType = IT::UINT;
+				entryIT.value.vint = value;
+				entryIT.idxFirstLine = indexLex;
+				_itoa_s(literalCounter++, charclit, sizeof(char) * 10, 10);
+				strcpy(bufL, L);
+				word[i] = strcat(bufL, charclit);
+				strcpy(entryIT.id, word[i]);
+				IT::Add(idTable, entryIT);
+				entryIT = {};
+
+				LT::Entry* entryLT = new LT::Entry(LEX_LITERAL, line, IT::IsId(idTable, word[i]));
+				LT::Add(lexTable, *entryLT);
+				continue;
 			}
+
+			
 			
 			else if (FST::execute(FST::FST(word[i], FST_COMMA)))
 			{

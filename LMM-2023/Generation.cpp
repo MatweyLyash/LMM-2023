@@ -298,13 +298,7 @@ namespace Gen
 					case LEX_INV:
 					{
 						out << "\tpop ebx\n";
-
-						// —оздаем маску, оставл€ющую только младшие биты
-						const unsigned int mask = 0xFFFFFFFF; // 0x7FFFFFFF в двоичной форме: 0111 1111 1111 1111 1111 1111 1111 1111
-
-						// »спользуем маску дл€ инвертировани€ младших битов
-						out << "\tand ebx, " << mask << "\n";
-
+						out << "\tnot ebx" << "\n";
 						out << "\tpush ebx\n";
 						break;
 					}
@@ -353,7 +347,7 @@ namespace Gen
 				out << "\tcall " << idT.table[lexT.table[i - countParms - 1].idxTI].id << "\n";
 				break;
 
-			case LEX_RETURN: // recive прыгнуть по метке где pop eax
+			case LEX_RETURN: // back прыгнуть по метке где pop eax
 				out << "\tpush ";
 				if (idT.table[lexT.table[i + 1].idxTI].idType == IT::L)
 					out << idT.table[lexT.table[i + 1].idxTI].value.vint << "\n";
@@ -422,7 +416,7 @@ namespace Gen
 				break;
 
 			case LEX_LEFTHESIS:
-				if (flagIf) { // условие condition
+				if (flagIf) { // условие тернарного оператора
 					if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL && lexT.table[i + 2].lexema == LEX_RIGHTHESIS) {
 						out << "\tmov eax, " << idT.table[lexT.table[i + 1].idxTI].id << "\n";
 						out << "\tcmp eax, 1\n";

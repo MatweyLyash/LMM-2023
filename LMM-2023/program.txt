@@ -1,11 +1,79 @@
+procedure Count( string h)
+{
+  write "счет от нуля до длины строки: ";
+  write h;
+  hortab;
+  var PosInt length = strlength (h);
+  var PosInt i=0;
+  cycle (i < length)
+  {
+   write i;
+   write ',';
+   i=i+1; 
+  }
+  hortab;
+}
+PosInt method GetFact( PosInt n)
+{
+  var PosInt k;
+  var PosInt j;
+ if (n < 0)
+ {
+   k = 0;
+ }
+ 
+ if (n ~ 0)
+ {
+   k = 1;
+ } 
+ else
+ {
+   j=n-1;
+   k=n*GetFact(j);
+ }
+back k;
+}
 glavnaya
 {
-?битовые операции;
-?изменить тип данных(следует из первого);
-?изменить структуру генерации кода, чтобы добавить битовые(pochti est');
-? решить проблему с O A I(никак не решаем ))0), ругается синтаксический анализатор на I );
-
- hortab;
- var PosInt number = -1;
- writeln number;
+var PosInt or;
+or = 25 O 5;
+var PosInt and = 7 A 3;
+var PosInt inv = I ^011111111111111111111111111110000 ;
+var string vyvod = "побитовые операции: или, и, инверсия:";
+writeln vyvod;
+write or;
+hortab;
+writeln and;
+writeln inv;
+writeln "символьные литералы";
+var Litara test = 'n';
+writeln test;
+test = 'Ы';? переопределение 
+writeln test;
+writeln "особенности беззнакового целочисленного ципа данных:";
+var PosInt someN = 5;
+writeln someN;
+?someN = -1;? ошибка(
+someN = someN - 10;
+writeln someN;
+someN = someN + 30;
+writeln someN;
+Count(vyvod); 
+var PosInt fac = stoi("123asd");
+writeln fac;
+fac = fac-120;
+fac = GetFact(fac);
+write "факториал: ";
+writeln fac;
+if(someN ! 30)
+{
+ writeln "someN не равно 30";
+  someN = 30;	
+}
+else
+{
+write "что?";
+}
+var PosInt comp = strcomp("hell", "hello");
+writeln comp;
 }

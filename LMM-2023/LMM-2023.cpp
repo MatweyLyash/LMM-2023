@@ -17,6 +17,7 @@ int wmain(int argc, wchar_t* argv[])
 	setlocale(LC_ALL, "ru");
 	try
 	{
+		
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		log = Log::getlog(parm.log);
 		out = OUT::getout(parm.logOut);
@@ -35,7 +36,6 @@ int wmain(int argc, wchar_t* argv[])
 		Semantic::SemAnalyze(lex, log);
 		Polish::StartPolish(lex);
 		Lexis::Synchronization(lex);
-		LT::ShowTable(lex.lextable, *out.stream);
 
 		Gen::Generator Gener(lex.lextable, lex.idtable, parm.out);
 
@@ -48,9 +48,11 @@ int wmain(int argc, wchar_t* argv[])
 	catch (Error::ERROR e)
 	{
 		Log::WriteError(log, e);
+	/*	system("otche-nash.mp3");*/
 		return -1;
 	}
 	std::cout << "Все прошло успешно!\n";
+	system("chipi.mp3");
 	system("startasm.bat");
 	return 0;
 }

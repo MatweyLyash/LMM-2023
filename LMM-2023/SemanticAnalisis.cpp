@@ -136,7 +136,21 @@ namespace Semantic
 					}
 				}
 				continue;
-
+			/*case LEX_WRITE:
+				j = i + 1;
+				if (lex.lextable.table[j].lexema == LEX_ID ||
+					lex.lextable.table[j].lexema == LEX_LITERAL)
+				{
+					break;
+				}
+				else
+				{
+					std::cout << Error::geterror(311).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
+					Log::WriteError(log, Error::geterrorin(311, lex.lextable.table[i].strNumber, -1));
+					isGood = false;
+				}
+				continue;*/
+			
 			case LEX_FUNCTION:// проверка на переопределение функции
 				if (std::count(functions_id.begin(), functions_id.end(), lex.idtable.table[lex.lextable.table[i + 1].idxTI].id)) {
 					Log::WriteError(log, Error::geterrorin(307, lex.lextable.table[i + 1].strNumber, -1));
@@ -161,6 +175,7 @@ namespace Semantic
 					isGood = false;
 				}
 			}
+			
 		}
 		if (!isGood)
 			throw ERROR_THROW(109);

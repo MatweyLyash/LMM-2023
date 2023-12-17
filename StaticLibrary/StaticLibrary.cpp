@@ -122,16 +122,11 @@ extern "C"
 				if (str1[k] > str2[i])
 					return 1;
 				else if (str1[k] < str2[i])
-					return -1;
+					return 2;
 			}
 		}
 		if (len1 != len2)
-			return len1 > len2 ? 1 : -1;
+			return len1 > len2 ? 1 : 2;
 		return 0;
-	}
-
-	int randGen()
-	{
-		return rand();
 	}
 }
