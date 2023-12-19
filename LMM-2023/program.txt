@@ -45,10 +45,7 @@ write or;
 hortab;
 writeln and;
 writeln inv;
-writeln "символьные литералы";
 var Litara test = 'n';
-writeln test;
-test = 'Ы';? переопределение 
 writeln test;
 writeln "особенности беззнакового целочисленного ципа данных:";
 var PosInt someN = 5;
@@ -56,28 +53,19 @@ writeln someN;
 ?someN = -1;? ошибка(
 someN = someN - 10;
 writeln someN;
-someN = someN + 30;
-writeln someN;
 Count(vyvod);
 writeln " результат выполнения процедуры";
-var PosInt fac = stoi("123asd");
+var PosInt fac = stoi("3asd");
 writeln fac;
-fac = fac-120;
 fac = GetFact(fac);
-write "факториал: ";
 writeln fac;
 if(someN ! 30)
 {
  writeln "someN не равно 30";
-  someN = 30;	
 }
 else
 {
 write "что?";
 }
 var PosInt comp = strcomp("world", "words");
-writeln comp;
-var PosInt result = (10+45)/(2+(4*5+^0001)/3)-3;
-write result;
-hortab;
 }

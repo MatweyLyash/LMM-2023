@@ -31,23 +31,16 @@ EXTRN strcomp: proc
 	L8 sdword 3
 	L9 sdword 4294967280
 	L10 byte "побитовые операции: или, и, инверсия:",0
-	L11 byte "символьные литералы",0
-	L12 word 'n'
-	L13 word 'Ы'
-	L14 byte "особенности беззнакового целочисленного ципа данных:",0
-	L15 sdword 10
+	L11 word 'n'
+	L12 byte "особенности беззнакового целочисленного ципа данных:",0
+	L13 sdword 10
+	L14 byte " результат выполнения процедуры",0
+	L15 byte "3asd",0
 	L16 sdword 30
-	L17 byte " результат выполнения процедуры",0
-	L18 byte "123asd",0
-	L19 sdword 120
-	L20 byte "факториал: ",0
-	L21 byte "someN не равно 30",0
-	L22 byte "что?",0
-	L23 byte "world",0
-	L24 byte "words",0
-	L25 sdword 45
-	L26 sdword 2
-	L27 sdword 4
+	L17 byte "someN не равно 30",0
+	L18 byte "что?",0
+	L19 byte "world",0
+	L20 byte "words",0
 
 .data
 	buffer BYTE 256 dup(0)
@@ -63,7 +56,6 @@ EXTRN strcomp: proc
 	glavnayasomeN sdword  0
 	glavnayafac sdword  0
 	glavnayacomp sdword  0
-	glavnayaresult sdword  0
 
 .code
 Count proc Counth : dword
@@ -180,67 +172,43 @@ main proc
 	call OutputLNInt
 	push glavnayainv
 	call OutputLNInt
-	push offset L11
-	call OutputLNStr
-	push L12
+	push L11
 	pop glavnayatest
 	push glavnayatest
 	call OutputLNChar
-	push L13
-	pop glavnayatest
-	push glavnayatest
-	call OutputLNChar
-	push offset L14
+	push offset L12
 	call OutputLNStr
 	push L6
 	pop glavnayasomeN
 	push glavnayasomeN
 	call OutputLNInt
 	push glavnayasomeN
-	push L15
+	push L13
 	pop ebx
 	pop eax
 	sub eax, ebx
-	push eax
-	pop glavnayasomeN
-	push glavnayasomeN
-	call OutputLNInt
-	push glavnayasomeN
-	push L16
-	pop eax
-	pop ebx
-	add eax, ebx
 	push eax
 	pop glavnayasomeN
 	push glavnayasomeN
 	call OutputLNInt
 	push glavnayavyvod
 	call Count
-	push offset L17
+	push offset L14
 	call OutputLNStr
-	push offset L18
+	push offset L15
 	pop edx
-	push offset L18
+	push offset L15
 	call stoi
 	push eax
 	pop glavnayafac
 	push glavnayafac
 	call OutputLNInt
 	push glavnayafac
-	push L19
-	pop ebx
-	pop eax
-	sub eax, ebx
-	push eax
-	pop glavnayafac
-	push glavnayafac
 	pop edx
 	push glavnayafac
 	call GetFact
 	push eax
 	pop glavnayafac
-	push offset L20
-	call OutputStr
 	push glavnayafac
 	call OutputLNInt
 	mov eax, glavnayasomeN
@@ -249,68 +217,22 @@ main proc
 	jz m5
 	je m5
 m4:
-	push offset L21
+	push offset L17
 	call OutputLNStr
-	push L16
-	pop glavnayasomeN
 	jmp e1
 m5:
-	push offset L22
+	push offset L18
 	call OutputStr
 e1:
-	push offset L23
-	push offset L24
+	push offset L19
+	push offset L20
 	pop edx
 	pop edx
-	push offset L24
-	push offset L23
+	push offset L20
+	push offset L19
 	call strcomp
 	push eax
 	pop glavnayacomp
-	push glavnayacomp
-	call OutputLNInt
-	push L15
-	push L25
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	push L26
-	push L27
-	push L6
-	pop eax
-	pop ebx
-	mul ebx
-	push eax
-	push L4
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	push L8
-	pop ebx
-	pop eax
-	cdq
-	idiv ebx
-	push eax
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	pop ebx
-	pop eax
-	cdq
-	idiv ebx
-	push eax
-	push L8
-	pop ebx
-	pop eax
-	sub eax, ebx
-	push eax
-	pop glavnayaresult
-	push glavnayaresult
-	call OutputInt
-	call BREAKL
 	call ExitProcess
 main ENDP
 end main
