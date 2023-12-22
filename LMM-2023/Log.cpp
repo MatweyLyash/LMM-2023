@@ -82,14 +82,17 @@ namespace Log
 				<< "\nСтрока " << Err.inext.line
 				<< " позиция " << Err.inext.col << endl;
 		}
-		else
+		cout << "\nОшибка " << Err.id
+			<< ": " << Err.message
+			<< "\nСтрока " << Err.inext.line;
+		if (Err.inext.col != -1)
 		{
-			cout << "\nОшибка " << Err.id
-				<< ": " << Err.message
-				<< "\nСтрока " << Err.inext.line
-				<< " позиция " << Err.inext.col << endl;
-
+			cout << " позиция " << Err.inext.col << endl;
 		}
+
+				
+
+		
 	}
 	void Close(LOG log)
 	{

@@ -14,7 +14,7 @@
 #define LEX_DECLARE		'd'	//лексема для var
 #define LEX_RETURN		'r'	//return
 #define LEX_WRITE		'o'	//write
-#define LEX_WRITELN		'q'//writeln
+#define LEX_WRITELN		'q' //writeln
 #define LEX_MAINFUNC	'm'	//лексема для glavnaya
 #define LEX_CYCLE       'u' // лесема для cycle
 #define LEX_IF          'w' // лесема для if 

@@ -96,11 +96,12 @@ namespace GRB
 
 		Rule(
 			NS('C'), GRB_ERROR_SERIES + 8,// неверное условие цикла или уловного оператора  C - нетерменал условия 
-			4,
+			5,
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(3, TS('i'), TS('v'), TS('i')),
 			Rule::Chain(3, TS('i'), TS('v'), TS('l')),
-			Rule::Chain(3, TS('l'), TS('v'), TS('i'))
+			Rule::Chain(3, TS('l'), TS('v'), TS('i')),
+			Rule::Chain(3, TS('l'), TS('v'), TS('l'))
 		),
 		Rule(
 			NS('K'), GRB_ERROR_SERIES + 9,// ошибка при вызове функции 

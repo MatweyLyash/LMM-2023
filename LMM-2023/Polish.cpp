@@ -2,7 +2,7 @@
 #include "Polish.h"
 #include "LexAnalysis.h"
 using namespace std;
-
+#define MAX_PARAMS_COUNT 1000
 namespace Polish
 {
 	bool PolishNotation(int i, Lexis::LEX& lex)

@@ -63,6 +63,7 @@ namespace Gen
 	{
 		out << "\n.data\n";
 		out << "\tbuffer BYTE 256 dup(0)\n";
+		out << "\tdivision_by_zero db 'Division by zero',0\n";
 		for (int i = 0; i < lexT.size; i++)
 		{
 			if (lexT.table[i].lexema == LEX_DECLARE && idT.table[lexT.table[i + 2].idxTI].idType == IT::V)
@@ -100,7 +101,7 @@ namespace Gen
 			numOfEnds = 0,
 			countParms = 0;
 
-		std::string strRet = std::string(), // код recive
+		std::string strRet = std::string(), 
 			cycleCode = std::string(), // код цикла
 			funcName = std::string();
 
@@ -274,9 +275,31 @@ namespace Gen
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tsub eax, ebx\n\tpush eax\n";
 								break;
-							case LT::DIVOPER:
+							/*case LT::DIVOPER:
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tcdq\n\tidiv ebx\n\tpush eax\n";
+								break;*/
+							case LT::DIVOPER:
+
+								out << "\tpop ebx\n";
+
+								out << "\tcmp ebx, 0\n";
+								out << "\tje divider_is_zero\n";
+								out << "\tjne skip_check\n";
+								
+
+								out << "divider_is_zero:";
+
+								out << "\tpush offset division_by_zero\n";
+								out << "\tcall OutputStr\n";
+
+								out << "\tcall ExitProcess\n";
+								out << "\tskip_check:\n";
+								out << "\tpop eax\n";
+
+								out << "\tcdq\n";
+								out << "\tidiv ebx\n";
+								out << "\tpush eax\n";
 								break;
 							case LT::DIVMODOPER:
 								out << "\tpop ebx\n\tpop eax\n";

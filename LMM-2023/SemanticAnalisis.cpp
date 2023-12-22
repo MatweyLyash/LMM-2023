@@ -14,6 +14,7 @@ namespace Semantic
 		for (int i = 0; i < lex.lextable.size; i++)
 		{
 			switch (lex.lextable.table[i].lexema) {
+		
 			case LEX_RAV:
 				j = i + 1;
 				for (j; lex.lextable.table[j].lexema != LEX_SEMICOLON; j++) { // проверяем все, что после равно
@@ -41,6 +42,7 @@ namespace Semantic
 							hasWar = true;
 						}
 
+
 						continue;
 
 					case LEX_LEFTHESIS:// пропустить функцию 
@@ -61,14 +63,16 @@ namespace Semantic
 				continue;
 			case LEX_DECLARE:
 				if (std::count(varibles_id.begin(), varibles_id.end(), lex.idtable.table[lex.lextable.table[i + 2].idxTI].id)) {// проверка на переопределение переменной
-					Log::WriteError(log, Error::geterrorin(307, lex.lextable.table[i + 1].strNumber, -1));
-					std::cout << Error::geterror(317).message << ", строка: " << lex.lextable.table[i + 2].strNumber << "\n";
+					Log::WriteError(log, Error::geterrorin(306, lex.lextable.table[i + 1].strNumber, -1));
+					std::cout << Error::geterror(306).message << ", строка: " << lex.lextable.table[i + 2].strNumber << "\n";
 					isGood = false;
 				}
 				varibles_id.push_back(lex.idtable.table[lex.lextable.table[i + 2].idxTI].id);
 				continue;
 			case LEX_ID:
+				
 
+				
 				if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::F)   // проверка параметров функции 
 				{
 					x = 0;
@@ -84,6 +88,14 @@ namespace Semantic
 								hasWar = true;
 							}
 							x++;
+							if (x > 9) {
+
+								throw ERROR_THROW_IN(320, lex.lextable.table[i].strNumber, -1);
+								isGood = false;
+								hasWar = true;
+								break;
+								
+							}
 						}
 					}
 					/*совпадение кол-ва parms*/if (x != lex.idtable.table[lex.lextable.table[i].idxTI].countOfPar && !hasWar)
@@ -136,25 +148,12 @@ namespace Semantic
 					}
 				}
 				continue;
-			/*case LEX_WRITE:
-				j = i + 1;
-				if (lex.lextable.table[j].lexema == LEX_ID ||
-					lex.lextable.table[j].lexema == LEX_LITERAL)
-				{
-					break;
-				}
-				else
-				{
-					std::cout << Error::geterror(311).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
-					Log::WriteError(log, Error::geterrorin(311, lex.lextable.table[i].strNumber, -1));
-					isGood = false;
-				}
-				continue;*/
+			
 			
 			case LEX_FUNCTION:// проверка на переопределение функции
 				if (std::count(functions_id.begin(), functions_id.end(), lex.idtable.table[lex.lextable.table[i + 1].idxTI].id)) {
 					Log::WriteError(log, Error::geterrorin(307, lex.lextable.table[i + 1].strNumber, -1));
-					std::cout << Error::geterror(317).message << ", строка: " << lex.lextable.table[i + 1].strNumber << "\n";
+					std::cout << Error::geterror(307).message << ", строка: " << lex.lextable.table[i + 1].strNumber << "\n";
 					isGood = false;
 				}
 				functions_id.push_back(lex.idtable.table[lex.lextable.table[i + 1].idxTI].id);
@@ -173,6 +172,7 @@ namespace Semantic
 					std::cout << Error::geterror(314).message << ", строка: " << lex.lextable.table[j].strNumber << "\n";
 					Log::WriteError(log, Error::geterrorin(314, lex.lextable.table[j].strNumber, -1));
 					isGood = false;
+
 				}
 			}
 			

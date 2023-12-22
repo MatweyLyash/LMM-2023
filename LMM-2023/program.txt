@@ -1,6 +1,5 @@
 procedure Count( string h)
 {
-?ебучий калькулятор;
   write "счет от нуля до длины строки: ";
   write h;
   hortab;
@@ -38,34 +37,38 @@ glavnaya
 var PosInt or;
 or = 25 O 5;
 var PosInt and = 7 A 3;
-var PosInt inv = I ^0111111111111111111111111111110000 ;
+var PosInt inv = I ^011111111111111111111111111110000 ;
 var string vyvod = "побитовые операции: или, и, инверсия:";
-writeln vyvod;
+writeline vyvod;
 write or;
 hortab;
-writeln and;
-writeln inv;
+writeline and;
+writeline inv;
 var Litara test = 'n';
-writeln test;
-writeln "особенности беззнакового целочисленного ципа данных:";
+writeline test;
+writeline "особенности беззнакового целочисленного ципа данных:";
 var PosInt someN = 5;
-writeln someN;
+writeline someN;
 ?someN = -1;? ошибка(
 someN = someN - 10;
-writeln someN;
+writeline someN;
 Count(vyvod);
-writeln " результат выполнения процедуры";
+writeline " результат выполнения процедуры";
 var PosInt fac = stoi("3asd");
-writeln fac;
+writeline fac;
 fac = GetFact(fac);
-writeln fac;
+writeline fac;
 if(someN ! 30)
 {
- writeln "someN не равно 30";
+ writeline "someN не равно 30";
 }
 else
 {
 write "что?";
 }
 var PosInt comp = strcomp("world", "words");
+if(TRUE)
+{
+write "asd";
+}
 }

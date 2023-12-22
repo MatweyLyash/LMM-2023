@@ -101,14 +101,16 @@
 	FST::NODE(1, FST::RELATION('t', 4)),\
 	FST::NODE(1, FST::RELATION('e', 5)),\
 	FST::NODE()
-#define FST_WRITELN 8,	\
+#define FST_WRITELN 10,	\
 	FST::NODE(1, FST::RELATION('w', 1)),\
 	FST::NODE(1, FST::RELATION('r', 2)),\
 	FST::NODE(1, FST::RELATION('i', 3)),\
 	FST::NODE(1, FST::RELATION('t', 4)),\
 	FST::NODE(1, FST::RELATION('e', 5)),\
 	FST::NODE(1, FST::RELATION('l', 6)),\
-	FST::NODE(1, FST::RELATION('n', 7)),\
+	FST::NODE(1, FST::RELATION('i', 7)),\
+	FST::NODE(1, FST::RELATION('n', 8)),\
+	FST::NODE(1, FST::RELATION('e', 9)),\
 	FST::NODE()
 
 #define FST_ATOI 5,	\

@@ -58,7 +58,6 @@ namespace Lexis
 		bool findProc = false;
 		int is_cycle = 0;
 		int parmsCounter = 0;
-
 		std::stack<std::string> functions;
 		char* bufprefix = new char[10] { "" };
 		char* L = new char[2] { "L" };
@@ -74,7 +73,7 @@ namespace Lexis
 		{
 			bool findSameId = false;
 			position += strlen(word[i]);
-			switch (word[i][0]) // для ускорения смотрим по первому символу 
+			switch (word[i][0]) 
 			{
 			case 'v':
 			{
@@ -440,7 +439,7 @@ namespace Lexis
 						IT::Add(idTable, entryIT);
 					entryIT = { };
 					LT::Entry* entryLT = new LT::Entry(LEX_INV, line, IT::IsId(idTable, word[i]));
-					(*entryLT).priority = 1;
+					(*entryLT).priority = 4;
 					entryLT->op = LT::operations::INVOPER;
 					LT::Add(lexTable, *entryLT);
 					continue;
@@ -467,6 +466,7 @@ namespace Lexis
 				else
 				{
 					entryIT.idType = IT::V;
+				
 					int idx = IT::IsId(idTable, word[i]);
 					if (idx != TI_NULLIDX)
 					{
@@ -493,6 +493,11 @@ namespace Lexis
 					strcpy(bufprefix, functions.top().c_str());
 					word[i] = strcat(bufprefix, word[i]);
 				}
+				if (strlen(word[i]) > 15)
+				{
+					
+					throw ERROR_THROW_IN(613, line, -1);
+				}
 				strcpy(entryIT.id, word[i]);
 				int idx = IT::IsId(idTable, word[i]);
 				if (idx == TI_NULLIDX)
@@ -510,7 +515,7 @@ namespace Lexis
 				int h = 0;
 				int l = 0;
 				bool isbin = false;
-				if (word[i][0] == '^' || word[i][0] == 'i')
+				if (word[i][0] == '^')
 				{
 					h = strlen(word[i]);
 					l = 1;
@@ -529,6 +534,10 @@ namespace Lexis
 
 				if (word[i][0] == '^')
 				{
+					if (h>34) {
+						std::cout << Error::geterror(319).message << ", строка: " << line << "\n";
+						throw ERROR_THROW_IN(319, line, -1);
+					}
 					isbin = true;
 					int k = 1;
 					int end = 0;
@@ -553,7 +562,11 @@ namespace Lexis
 					}
 					value *= sign;
 				}
-				
+				if (!isbin && stoull(buff) > UINT_MAX)
+				{
+					std::cout << Error::geterror(319).message << ", строка: " << line << "\n";
+					throw ERROR_THROW_IN(319, line, -1);
+				}
 				if (!isbin)
 					value = stoul(buff);
 
@@ -631,11 +644,11 @@ namespace Lexis
 					entryLT->op = LT::operations::NEQUOPER;
 					break;
 				case AND:
-					(*entryLT).priority = 0;
+					(*entryLT).priority = 4;
 					entryLT->op = LT::operations::ANDOPER;
 					break;
 				case OR:
-					(*entryLT).priority = 0;
+					(*entryLT).priority = 4;
 					entryLT->op = LT::operations::OROPER;
 					break;
 
