@@ -29,7 +29,7 @@ EXTRN strcomp: proc
 	L6 sdword 5
 	L7 sdword 7
 	L8 sdword 3
-	L9 sdword 4294967280
+	L9 sdword 4294967288
 	L10 byte "побитовые операции: или, и, инверсия:",0
 	L11 word 'n'
 	L12 byte "особенности беззнакового целочисленного ципа данных:",0
@@ -43,7 +43,6 @@ EXTRN strcomp: proc
 	L20 byte "words",0
 
 .data
-	buffer BYTE 256 dup(0)
 	division_by_zero db 'Division by zero',0
 	Countlength sdword  0
 	Counti sdword  0
@@ -57,6 +56,9 @@ EXTRN strcomp: proc
 	glavnayasomeN sdword  0
 	glavnayafac sdword  0
 	glavnayacomp sdword  0
+	glavnayag sdword  0
+	glavnayap sdword  0
+	glavnayaj sdword  0
 
 .code
 Count proc Counth : dword
@@ -234,6 +236,30 @@ e1:
 	call strcomp
 	push eax
 	pop glavnayacomp
+	push L6
+	pop glavnayag
+	push L6
+	pop glavnayap
+	push L4
+	push glavnayag
+	push glavnayap
+	pop ebx
+	pop eax
+	sub eax, ebx
+	push eax
+	pop ebx
+	cmp ebx, 0
+	je divider_is_zero
+	jne skip_check
+divider_is_zero:	push offset division_by_zero
+	call OutputStr
+	call ExitProcess
+	skip_check:
+	pop eax
+	cdq
+	idiv ebx
+	push eax
+	pop glavnayaj
 	call ExitProcess
 main ENDP
 end main

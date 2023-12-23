@@ -41,9 +41,9 @@ namespace Lexis
 			if (word != NULL) break;
 		}
 
-		for (int i = 0; word[i]; i++) {
-			cout << word[i];
-		}
+		//for (int i = 0; word[i]; i++) {
+		//	cout << word[i];
+		//}
 		cout << endl;
 		int NOWIDXFUNC = 0;
 
@@ -338,7 +338,7 @@ namespace Lexis
 				if (FST::execute(FST::FST(word[i], FST_CHARLIT)))
 				{
 					int length = strlen(word[i]);
-					if (length > 3)// если символьный литерал больше 1
+					if (length > 3)
 					{
 						std::cout << Error::geterror(303).message << ", строка: " << line << "\n";
 						throw ERROR_THROW_IN(303, line, -1);
@@ -390,7 +390,7 @@ namespace Lexis
 				{
 					int length = strlen(word[i]);
 					if (length > 255)
-						throw ERROR_THROW_IN(318, line, -1);
+						throw ERROR_THROW_IN(317, line, -1);
 					for (int k = 0; k < length; k++)
 						word[i][k] = word[i][k + 1];
 					word[i][length - 2] = 0;
@@ -564,8 +564,8 @@ namespace Lexis
 				}
 				if (!isbin && stoull(buff) > UINT_MAX)
 				{
-					std::cout << Error::geterror(319).message << ", строка: " << line << "\n";
-					throw ERROR_THROW_IN(319, line, -1);
+					std::cout << Error::geterror(318).message << ", строка: " << line << "\n";
+					throw ERROR_THROW_IN(318, line, -1);
 				}
 				if (!isbin)
 					value = stoul(buff);

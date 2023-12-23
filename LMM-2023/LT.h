@@ -4,8 +4,8 @@
 #define LEXEMA_FIXSIZE 1	//фиксированный размер лексем
 #define LT_MAXSIZE 4096		//макс количество строк в таблице
 #define LT_TI_NULLIDX 0xffffffff	//нет элемента “»
-#define LEX_INTEGER		't'	//лексема дл€ integer
-#define LEX_BOOL        't' //лексема дл€ bool
+#define LEX_INTEGER		't'	//лексема дл€ PosInt
+#define LEX_BOOL        't' //лексема дл€ boolean
 #define LEX_STRING		't'	//лексема дл€ string
 #define LEX_CHAR		't'	//терминальный символ типа данных 
 #define LEX_LITERAL		'l'	//лексема дл€ литерала

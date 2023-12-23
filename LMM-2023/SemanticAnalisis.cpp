@@ -45,7 +45,7 @@ namespace Semantic
 
 						continue;
 
-					case LEX_LEFTHESIS:// пропустить функцию 
+					case LEX_LEFTHESIS:
 						if (lex.lextable.table[j - 1].idxTI != -1) {
 							if (lex.idtable.table[lex.lextable.table[j - 1].idxTI].idType == IT::F)
 							{
@@ -59,7 +59,7 @@ namespace Semantic
 				}
 				continue;
 			case LEX_SEMICOLON:
-				hasWar = false; // для того, чтобы не печатало одну и ту же ошибку в строке
+				hasWar = false; 
 				continue;
 			case LEX_DECLARE:
 				if (std::count(varibles_id.begin(), varibles_id.end(), lex.idtable.table[lex.lextable.table[i + 2].idxTI].id)) {// проверка на переопределение переменной
@@ -73,14 +73,14 @@ namespace Semantic
 				
 
 				
-				if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::F)   // проверка параметров функции 
+				if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::F)   
 				{
 					x = 0;
 					for (int h = i + 1; lex.lextable.table[h].lexema != LEX_RIGHTHESIS; h++)
 					{
 						if (lex.lextable.table[h].idxTI != -1)
 						{
-							/*совпадение типов данных*/if (lex.idtable.table[lex.lextable.table[i].idxTI].parm[x].idDataType != lex.idtable.table[lex.lextable.table[h].idxTI].idDataType && !hasWar)
+										if (lex.idtable.table[lex.lextable.table[i].idxTI].parm[x].idDataType != lex.idtable.table[lex.lextable.table[h].idxTI].idDataType && !hasWar)
 							{
 								std::cout << Error::geterror(309).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
 								Log::WriteError(log, Error::geterrorin(309, lex.lextable.table[i].strNumber, -1));
@@ -90,7 +90,7 @@ namespace Semantic
 							x++;
 							if (x > 9) {
 
-								throw ERROR_THROW_IN(320, lex.lextable.table[i].strNumber, -1);
+								throw ERROR_THROW_IN(319, lex.lextable.table[i].strNumber, -1);
 								isGood = false;
 								hasWar = true;
 								break;
@@ -98,7 +98,7 @@ namespace Semantic
 							}
 						}
 					}
-					/*совпадение кол-ва parms*/if (x != lex.idtable.table[lex.lextable.table[i].idxTI].countOfPar && !hasWar)
+								if (x != lex.idtable.table[lex.lextable.table[i].idxTI].countOfPar && !hasWar)
 					{
 						std::cout << Error::geterror(309).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
 						Log::WriteError(log, Error::geterrorin(309, lex.lextable.table[i].strNumber, -1));
@@ -107,7 +107,7 @@ namespace Semantic
 					}
 
 				}
-				if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::NONE) // необъявленный id
+				if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::NONE) 
 				{
 					std::cout << Error::geterror(305).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
 					Log::WriteError(log, Error::geterrorin(305, lex.lextable.table[i].strNumber, -1));
@@ -115,12 +115,18 @@ namespace Semantic
 				}
 				continue;
 			case LEX_CYCLE:
-			case LEX_IF: // проверка условий в цикле и условном операторе 
+			case LEX_IF: 
 
 				if (lex.lextable.table[i + 3].lexema == LEX_RIGHTHESIS && lex.idtable.table[lex.lextable.table[i + 2].idxTI].idDataType != IT::BOOL)
 				{
 					std::cout << Error::geterror(316).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
 					Log::WriteError(log, Error::geterrorin(316, lex.lextable.table[i].strNumber, -1));
+					isGood = false;
+				}
+				else if (lex.lextable.table[i + 3].lexema == LEX_RIGHTHESIS && lex.idtable.table[lex.lextable.table[i + 2].idxTI].idDataType == IT::BOOL)
+				{
+					std::cout << Error::geterror(310).message << ", строка: " << lex.lextable.table[i].strNumber << "\n";
+					Log::WriteError(log, Error::geterrorin(310, lex.lextable.table[i].strNumber, -1));
 					isGood = false;
 				}
 				else if (lex.idtable.table[lex.lextable.table[i + 3].idxTI].idType == IT::OP)// если в условии 2 значения и операция 

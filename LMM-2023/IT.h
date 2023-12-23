@@ -26,7 +26,7 @@ namespace IT
 		Parms parm[10]; // параметры 
 		union
 		{
-			unsigned int vint; // значение инта
+			unsigned int vint; // значение уинт
 			char vchar[1];
 			struct
 			{

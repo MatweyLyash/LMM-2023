@@ -10,12 +10,12 @@ namespace Polish
 		stack<LT::Entry> stack;
 		queue<LT::Entry> queue;
 
-		LT::Entry aggrSymbol; // параметр
+		LT::Entry aggrSymbol; 
 		aggrSymbol.idxTI = -1;
 		aggrSymbol.lexema = '#';
 		aggrSymbol.strNumber = lex.lextable.table[i].strNumber;
 
-		LT::Entry funcSymbol; // функция 
+		LT::Entry funcSymbol;
 		funcSymbol.idxTI = LT_TI_NULLIDX;
 		funcSymbol.lexema = '@';
 		funcSymbol.strNumber = lex.lextable.table[i].strNumber;

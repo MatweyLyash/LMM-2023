@@ -37,7 +37,7 @@ glavnaya
 var PosInt or;
 or = 25 O 5;
 var PosInt and = 7 A 3;
-var PosInt inv = I ^011111111111111111111111111110000 ;
+var PosInt inv = I ^011111111111111111111111111111000 ;
 var string vyvod = "побитовые операции: или, и, инверсия:";
 writeline vyvod;
 write or;
@@ -67,4 +67,8 @@ else
 write "что?";
 }
 var PosInt comp = strcomp("world", "words");
+var PosInt g =5;
+var PosInt p =5;
+var PosInt j = 1/(g-p);
 }
+

@@ -57,13 +57,6 @@ namespace Div
 						k = -1;
 						break;
 					}
-					//удаляем комментарий, если не нужна операция разности  
-					/*if (Separators[t] == '-' && (source[i-1] != '+' || source[i-1] != '*'
-						|| source[i - 1] != '/' || source[i - 1] != '%' || source[i - 1] != '-')) {
-						findSeparator = false;
-						break;
-					}*/
-
 					word[j][k++] = Separators[t];
 					word[j++][k] = '\0';
 					k = -1;

@@ -49,20 +49,21 @@ namespace Gen
 				out << "\t" << idT.table[i].id;
 				if (idT.table[i].idDataType == IT::STR)
 					out << " byte \"" << idT.table[i].value.vstr.str << "\",0";
-				else if (idT.table[i].idDataType == IT::UINT || idT.table[i].idDataType == IT::BOOL)
+				else if (idT.table[i].idDataType == IT::UINT)
 					out << " sdword " << idT.table[i].value.vint;
 				else if (idT.table[i].idDataType == IT::CHAR)
 					out << " word \'" << idT.table[i].value.vchar << "\'";
+				else if (idT.table[i].idDataType == IT::BOOL)
+					out << " word " << idT.table[i].value.vint;
 				out << "\n";
 			}
 		}
 
 	}
 
-	void Generator::Data() // сегмент данных 
+	void Generator::Data() 
 	{
 		out << "\n.data\n";
-		out << "\tbuffer BYTE 256 dup(0)\n";
 		out << "\tdivision_by_zero db 'Division by zero',0\n";
 		for (int i = 0; i < lexT.size; i++)
 		{
@@ -113,7 +114,7 @@ namespace Gen
 			flagElse = false,
 			flagProc = false,
 			flagCallfunc = false,
-			flagCondition = false,
+			flagCycling = false,
 			flagCycle = false;
 
 		int resultPosition;
@@ -151,27 +152,26 @@ namespace Gen
 				out << "\n";
 				break;
 			case LEX_ID:
-				if (idT.table[lexT.table[i].idxTI].idType == IT::F) // если идентификатор функция 
+				if (idT.table[lexT.table[i].idxTI].idType == IT::F) 
 				{
 					int count = 0;
 					for (int j = i + 2; lexT.table[j].lexema; j++)
 					{
 						if (lexT.table[j].lexema == LEX_RIGHTHESIS) break;
 						else if (lexT.table[j].lexema == LEX_COMMA) j++;
-						// формируем стек для функции 
 						if (idT.table[lexT.table[j].idxTI].idDataType == IT::UINT || idT.table[lexT.table[j].idxTI].idDataType == IT::BOOL || idT.table[lexT.table[j].idxTI].idDataType == IT::CHAR)
 						{
 							count++;
 							idStack.push(idT.table[lexT.table[j].idxTI].id);
 						}
-						else if (idT.table[lexT.table[j].idxTI].idDataType == IT::STR) { // стринговый парметр 
+						else if (idT.table[lexT.table[j].idxTI].idDataType == IT::STR) { 
 							count++;
 
 							char* s;
-							if (idT.table[lexT.table[j].idxTI].idType == IT::L) { // литерал  с offset
+							if (idT.table[lexT.table[j].idxTI].idType == IT::L) { 
 								s = new char[8] { "offset " };
 							}
-							else { // переменная 
+							else { 
 								s = new char[1] { "" };
 							}
 
@@ -183,11 +183,11 @@ namespace Gen
 							idStack.push(result);
 						}
 					}
-					for (int k = 0; k < count; k++) { //  пушим параметры в стек 
+					for (int k = 0; k < count; k++) { 
 						out << "\tpush " << idStack.top() << "\n";
 						idStack.pop();
 					}
-					out << "\tcall " << idT.table[lexT.table[i].idxTI].id << "\n"; // вызов функции 
+					out << "\tcall " << idT.table[lexT.table[i].idxTI].id << "\n";
 				}
 				break;
 
@@ -195,7 +195,7 @@ namespace Gen
 				flagBody = true;
 				out << "main proc\n";
 				break;
-			case LEX_RAV: // выражение 
+			case LEX_RAV: 
 				resultPosition = i - 1;
 				while (lexT.table[i].lexema != LEX_SEMICOLON) {
 					switch (lexT.table[i].lexema) {
@@ -206,7 +206,7 @@ namespace Gen
 							flagCallfunc = true;
 						if (idT.table[lexT.table[i].idxTI].idDataType == IT::UINT || idT.table[lexT.table[i].idxTI].idDataType == IT::BOOL || idT.table[lexT.table[i].idxTI].idDataType == IT::CHAR) // 
 						{
-							out << "\tpush " << idT.table[lexT.table[i].idxTI].id << "\n"; // пушить в стек переменнную или литерал 
+							out << "\tpush " << idT.table[lexT.table[i].idxTI].id << "\n"; 
 							stack.push(idT.table[lexT.table[i].idxTI].id);
 							break;
 						}
@@ -262,7 +262,7 @@ namespace Gen
 						}
 						else
 						{
-							switch (lexT.table[i].op) { // арифметические операции 
+							switch (lexT.table[i].op) { 
 							case LT::MULOPER:
 								out << "\tpop eax\n\tpop ebx\n";
 								out << "\tmul ebx\n\tpush eax\n";
@@ -275,37 +275,23 @@ namespace Gen
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tsub eax, ebx\n\tpush eax\n";
 								break;
-							/*case LT::DIVOPER:
-								out << "\tpop ebx\n\tpop eax\n";
-								out << "\tcdq\n\tidiv ebx\n\tpush eax\n";
-								break;*/
 							case LT::DIVOPER:
 
-								out << "\tpop ebx\n";
-
-								out << "\tcmp ebx, 0\n";
+								out << "\tpop ebx\n\tcmp ebx, 0\n";
 								out << "\tje divider_is_zero\n";
 								out << "\tjne skip_check\n";
-								
-
 								out << "divider_is_zero:";
-
 								out << "\tpush offset division_by_zero\n";
 								out << "\tcall OutputStr\n";
-
-								out << "\tcall ExitProcess\n";
-								out << "\tskip_check:\n";
-								out << "\tpop eax\n";
-
-								out << "\tcdq\n";
-								out << "\tidiv ebx\n";
-								out << "\tpush eax\n";
+								out << "\tcall ExitProcess\n\tskip_check:\n";
+								out << "\tpop eax\n\tcdq\n";
+								out << "\tidiv ebx\n\tpush eax\n";
 								break;
 							case LT::DIVMODOPER:
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tcdq\n\tidiv ebx\n\tpush edx\n";
 								break;
-								//hz verno li
+							
 							case LT::ANDOPER:
 								out << "\tpop ebx\n\tpop eax\n";
 								out << "\tand\t ebx, eax\n\tpush ebx\n";
@@ -325,7 +311,7 @@ namespace Gen
 						out << "\tpush ebx\n";
 						break;
 					}
-					case '@': // параметры  // вызов функции 
+					case '@': 
 						countParms = (char)lexT.table[i + 1].lexema - '0';
 
 						for (int j = 1; j <= countParms; j++)
@@ -350,7 +336,7 @@ namespace Gen
 
 				out << "\tpop " << idT.table[lexT.table[resultPosition].idxTI].id << "\n";
 				break;
-			case '@':// параметры  // вызов функции 
+			case '@':
 				countParms = (char)lexT.table[i + 1].lexema - '0';
 				for (int j = 1; j <= countParms; j++) {
 					if (idT.table[lexT.table[i - j].idxTI].idDataType == IT::UINT || idT.table[lexT.table[i - j].idxTI].idDataType == IT::BOOL)
@@ -370,7 +356,7 @@ namespace Gen
 				out << "\tcall " << idT.table[lexT.table[i - countParms - 1].idxTI].id << "\n";
 				break;
 
-			case LEX_RETURN: // back прыгнуть по метке где pop eax
+			case LEX_RETURN: 
 				out << "\tpush ";
 				if (idT.table[lexT.table[i + 1].idxTI].idType == IT::L)
 					out << idT.table[lexT.table[i + 1].idxTI].value.vint << "\n";
@@ -381,7 +367,7 @@ namespace Gen
 					flagRet = true;
 				}
 				if (flagBody) {
-					out << "\t\tjmp theend\n";
+					out << "\t\tjmp \n";
 					flagRet = true;
 				}
 				break;
@@ -431,7 +417,7 @@ namespace Gen
 
 			case LEX_CYCLE:
 				flagCycle = true;
-				flagCondition = true;
+				flagCycling = true;
 				break;
 
 			case LEX_ELSE:
@@ -439,7 +425,7 @@ namespace Gen
 				break;
 
 			case LEX_LEFTHESIS:
-				if (flagIf) { // условие тернарного оператора
+				if (flagIf) { 
 					if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL && lexT.table[i + 2].lexema == LEX_RIGHTHESIS) {
 						out << "\tmov eax, " << idT.table[lexT.table[i + 1].idxTI].id << "\n";
 						out << "\tcmp eax, 1\n";
@@ -488,7 +474,7 @@ namespace Gen
 					}
 				}
 
-				if (flagCondition) { // если условие цикла
+				if (flagCycling) {
 					if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL && lexT.table[i + 2].lexema == LEX_RIGHTHESIS) { // если один параметр
 						out << "\tmov eax, " << idT.table[lexT.table[i + 1].idxTI].id << "\n";
 						out << "\tcmp eax, 1\n";
@@ -531,12 +517,12 @@ namespace Gen
 					out << "m" << numOfPoints++ << ":\n";
 					flagIf = false;
 				}
-				if (lexT.table[i + 1].lexema == LEX_LEFTBRACE && flagCondition) {
+				if (lexT.table[i + 1].lexema == LEX_LEFTBRACE && flagCycling) {
 					out << "cycle" << numOfCycles << ":\n";
-					flagCondition = false;
+					flagCycling = false;
 				}
 				break;
-			case LEX_WRITE: // печатать 
+			case LEX_WRITE: 
 				if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::UINT)
 					out << "\tpush " << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputInt\n";
 				else if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL)
@@ -551,7 +537,7 @@ namespace Gen
 					out << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputStr\n";
 				}
 				break;
-			case LEX_WRITELN: // печатать 
+			case LEX_WRITELN: 
 				if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::UINT)
 					out << "\tpush " << idT.table[lexT.table[i + 1].idxTI].id << "\n\tcall OutputLNInt\n";
 				else if (idT.table[lexT.table[i + 1].idxTI].idDataType == IT::BOOL)

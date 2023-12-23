@@ -22,7 +22,7 @@ namespace GRB
 			Rule::Chain(4, TS('p'), TS('i'), NS('F'), NS('U'))
 		),
 		Rule(
-			NS('N'), GRB_ERROR_SERIES + 1, // неверная конструкция фунцкии 
+			NS('N'), GRB_ERROR_SERIES + 1, 
 			20,
 			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'), NS('N')),
 			Rule::Chain(7, TS('d'), TS('t'), TS('i'), TS('='), NS('E'), TS(';'), NS('N')),
@@ -95,7 +95,7 @@ namespace GRB
 		),
 
 		Rule(
-			NS('C'), GRB_ERROR_SERIES + 8,// неверное условие цикла или уловного оператора  C - нетерменал условия 
+			NS('C'), GRB_ERROR_SERIES + 8,// неверное условие цикла или уcловного оператора   
 			5,
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(3, TS('i'), TS('v'), TS('i')),

@@ -84,15 +84,11 @@ extern "C"
 		return strlen(str);
 	}
 
-	int stoi(char* str)// переводит в число до первой не цифры 
+	int stoi(char* str)
 	{
 		int i = strlen(str), k = 1, sign = 1, end = 0;
 		int num = 0;
-		if (str[0] == 'i')
-		{
-			sign = -1;
-			end = 1;
-		}
+	
 		for (i; i >= end; i--)
 		{
 			if (str[i] >= '0' && str[i] < '9')
@@ -109,7 +105,7 @@ extern "C"
 		return sign * num;
 	}
 
-	int strcomp(char* str1, char* str2) // сравнивает две строки
+	int strcomp(char* str1, char* str2) 
 	{
 		int i = NULL, len1 = NULL, len2 = NULL;
 		for (; str1[len1] != '\0'; len1++);

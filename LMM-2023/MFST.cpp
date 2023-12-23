@@ -185,7 +185,8 @@ namespace MFST
 			MFST_TRACE4("------>NS_NORULE")
 				out << "------------------------------------------------------------------------------------------   ------" << std::endl;
 			out << GetDiagnosis(0, buf) << std::endl;
-
+			out << GetDiagnosis(1, buf) << std::endl;
+			out << GetDiagnosis(2, buf) << std::endl;
 			break;
 		}
 
